@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content "
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/tvRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/ivPoster"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif"
+        tools:text="Rating" />
+
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_dark"
+        tools:srcCompat="@tools:sample/avatars[14]" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ivPoster"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif"
+        tools:text="Creed II" />
+
+    <TextView
+        android:id="@+id/tvOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tvTitle"
+        android:layout_marginStart="121dp"
+        android:layout_marginLeft="121dp"
+        android:layout_marginTop="71dp"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        tools:text="Follows Adonis Creed's life inside and outside of the ring as he deals with new found fame, issues with his family, and his continuing quest to become a champion." />
+
+</RelativeLayout>
