@@ -3,10 +3,12 @@ package com.example.flickster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Movie
 {
     //double voteAverage;
@@ -14,6 +16,10 @@ public class Movie
     String title;
     String overview;
     String backdropPath;
+
+    //empty constructor need for parcel
+    public Movie() {
+    }
 
     public Movie(JSONObject jsonObject) throws JSONException
     {
