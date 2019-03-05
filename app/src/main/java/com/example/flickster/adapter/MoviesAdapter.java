@@ -68,7 +68,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
-            //tvRate = itemView.findViewById(R.id.tvRate);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
             container = itemView.findViewById(R.id.container);
@@ -95,7 +94,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 public void onClick(View v)
                 {
                     Intent i = new Intent(context, DetailActivity.class);
-                    i.putExtra("name", Parcels.wrap(movie));
+                    i.putExtra("movie", Parcels.wrap(movie));
                     context.startActivity(i);
                 }
             });

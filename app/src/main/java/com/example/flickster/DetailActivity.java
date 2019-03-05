@@ -1,23 +1,37 @@
 package com.example.flickster;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.flickster.models.Movie;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
-public class DetailActivity extends AppCompatActivity
+import cz.msebera.android.httpclient.Header;
+
+public class DetailActivity extends YouTubeBaseActivity
 {
+
+    public static  final String YOUTUBE_API_KEY = "AIzaSyCb4n2hhsrULBgwLn4nej58uszfqdVSPsw";
+    private static final String TRAILER_API = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
     TextView tvTitle;
     TextView tvOverview;
     RatingBar ratingBar;
+    YouTubePlayerView youTubePlayerView;
 
     Movie movie;
-    //= Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,8 +42,57 @@ public class DetailActivity extends AppCompatActivity
         tvTitle = findViewById(R.id.tvTitle);
         tvOverview = findViewById(R.id.tvOverview);
         ratingBar = findViewById(R.id.ratingBar);
+        youTubePlayerView = findViewById(R.id.player);
 
-        Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         tvTitle.setText(movie.getTitle());
+        tvOverview.setText(movie.getOverview());
+        ratingBar.setRating((float) movie.getVoteAverage());
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(String.format(TRAILER_API, movie.getMovieId()), new JsonHttpResponseHandler()
+        {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONArray results = response.getJSONArray("results");
+                    if (results.length() == 0)
+                    {
+                        return;
+                    } //end if
+
+                    JSONObject movieTrailer = results.getJSONObject(0);
+                    String youtubeKey = movieTrailer.getString("key");
+                    initalizeYoutube(youtubeKey);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            private void initalizeYoutube(final String youtubeKey)
+            {
+                youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                        Log.d("smile","on init success");
+                        youTubePlayer.cueVideo("youtubeKey");
+                    }
+
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                        Log.d("smile","on init failure");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+
+
+            }
+        });
     }
 }

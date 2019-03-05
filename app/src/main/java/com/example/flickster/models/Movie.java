@@ -11,7 +11,8 @@ import java.util.List;
 @Parcel
 public class Movie
 {
-    //double voteAverage;
+    int movieId;
+    double voteAverage;
     String posterPath;
     String title;
     String overview;
@@ -26,8 +27,9 @@ public class Movie
         posterPath = jsonObject.getString("poster_path");
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
-        //voteAverage = jsonObject.getDouble("vote_average");
+        voteAverage = jsonObject.getDouble("vote_average");
         backdropPath = jsonObject.getString("backdrop_path");
+        movieId = jsonObject.getInt("id");
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException
@@ -60,9 +62,7 @@ public class Movie
         return overview;
     }
 
-    //public String getVoteAverage()
-    //{
-    //    return String.valueOf(voteAverage);
-    //}
+    public double getVoteAverage() { return voteAverage; }
 
+    public int getMovieId() { return movieId; }
 }
