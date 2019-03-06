@@ -21,7 +21,7 @@ This project lets users view a list of movies sourced from the The Movie Databas
 
 ### App Walkthough GIF
 
-LINK: https://imgur.com/Uc2IdYb
+LINK: https://imgur.com/wNRJXLF
 
 ### Notes
 
